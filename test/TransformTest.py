@@ -19,11 +19,12 @@ class MyTestCase(unittest.TestCase):
         with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\Accelerometer.csv", 'r') as f_obj:
             reader = csv_reader(f_obj)
             reader.columns = ['timestamp', 'x', 'y', 'z']
-            df = reader['z']
-            filt_coord=work_with_coordinates(reader, 'z')
+            df = reader['x']
+            filt_coord=work_with_coordinates(df)
             first_data=df.iloc[0:500]
             first_data.plot()
             plt.plot(filt_coord[0:500])
+            plt.grid()
             plt.show()
 
     def test_size_of_interval(self):
@@ -31,9 +32,10 @@ class MyTestCase(unittest.TestCase):
             reader = csv_reader(f_obj)
             reader.columns = ['timestamp', 'x', 'y', 'z']
             time = np.array(reader['timestamp'])
-            coord=work_with_coordinates(reader,'z')
+            df = reader['x']
+            coord=work_with_coordinates(df)
             ic=interval_calculation(time, coord)
-            self.assertEqual(ic.astype(int),2880)
+            self.assertEqual(ic.astype(int),1490)
 
     def test_make_array(self):
         with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\Accelerometer.csv", 'r') as f_obj:
@@ -46,10 +48,26 @@ class MyTestCase(unittest.TestCase):
 
     def test_frequencies(self):
         with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\Accelerometer.csv", 'r') as f_obj:
-            data=data_transform(f_obj, 'z')
+            data=data_transform(f_obj)
             freq = fft_transform(data)
-            FFT_data = np.fft.fft(data[0])
-            plt.plot(freq[0], FFT_data, linewidth=0.5)
-            plt.ylim(-40, 40)
+            N = len(data[0])
+            dat=np.array(data[0])
+            FFT_data = np.fft.fft(dat)/N
+
+            xt = np.array(FFT_data)
+            K = len(xt)
+            yt = freq[0]
+            fig, ax = plt.subplots()
+            ax.plot(np.abs(yt.T)[:K],np.abs(xt),'b')
+            plt.ylim(-1, 5)
+            plt.xscale('log')
+            plt.grid()
+            plt.show()
+
+    def test_vector(self):
+        with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\Accelerometer.csv", 'r') as f_obj:
+            data=data_transform(f_obj)
+            df=np.array(data[0])
+            plt.plot(df[0:500])
             plt.grid()
             plt.show()

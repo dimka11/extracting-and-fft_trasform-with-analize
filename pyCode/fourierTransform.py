@@ -1,38 +1,52 @@
-import numpy as np
+from math import sqrt
 
+import numpy as np
+import matplotlib.pyplot as plt
 
 from pyCode.extractData import csv_reader
 
 
-def data_transform(file_obj, key):
+def data_transform(file_obj):
     coordinates = csv_reader(file_obj)
     coordinates.columns = ['timestamp', 'x', 'y', 'z']
     time = np.array(coordinates['timestamp'])
-    coord=work_with_coordinates(coordinates, key)
-    array_of_coordinates_intervals=make_intervals(time,coord)
-    return array_of_coordinates_intervals
 
-def fft_transform(array_of_coordinates_intervals):
-    sampling_rate = .00588
-    array_of_frequencies = []
-    freq = make_array_of_frequencies(array_of_coordinates_intervals, array_of_frequencies, sampling_rate)
+    coordX = coordinates['x']
+    coordY = coordinates['y']
+    coordZ = coordinates['z']
+
+    array_of_coordinatesX_intervals = make_intervals(time,coordX)
+    array_of_coordinatesY_intervals = make_intervals(time, coordY)
+    array_of_coordinatesZ_intervals = make_intervals(time, coordZ)
+    vector_of_accelerations = create_vector_of_acceleration(array_of_coordinatesX_intervals,array_of_coordinatesY_intervals ,array_of_coordinatesZ_intervals)
+    vector = []
+    for vect in vector_of_accelerations:
+        changedVect = work_with_coordinates(vect)
+        vector.append(changedVect)
+    vector_of_acc = np.array(vector)
+    return vector_of_acc
+
+def fft_transform(vector_of_accelerations):
+    freq = make_array_of_frequencies(vector_of_accelerations)
     return freq
 
-def make_array_of_frequencies(array_of_coordinates_intervals,array_of_frequencies,sampling_rate):
-    for df in array_of_coordinates_intervals:
+def make_array_of_frequencies (vector_of_accelerations):
+    sampling_rate = .00588
+    array_of_frequencies = []
+    for df in vector_of_accelerations:
         FFT_data = np.fft.fft(df[:])
         freq = np.fft.fftfreq(np.array(FFT_data).shape[-1], d=sampling_rate)
         array_of_frequencies.append(freq)
     return array_of_frequencies
 
-def make_intervals(time,coord):
+def make_intervals(time,coord):##Разбиение данных на интервалы
     ic = interval_calculation(time, coord)
     array_of_coordinates_intervals = creating_intervals(ic, coord)
     return array_of_coordinates_intervals
 
-def work_with_coordinates(coord, key):
-    filter_value = 10
-    taken_coordinates = filter_record(coord[key], filter_value)
+def work_with_coordinates(coord):###Фильтрация данных и преобзазование их в массив
+    filter_value = 5
+    taken_coordinates = filter_record(coord, filter_value)
     crd = np.array(taken_coordinates)
     return crd
 
@@ -59,3 +73,16 @@ def data_normalisation(req, length):
 def filter_record(record, filter_value):
     filt_record = data_normalisation(record, filter_value)
     return filt_record
+
+def create_vector_of_acceleration(array_of_coordinates_intervals_X, array_of_coordinates_intervals_Y, array_of_coordinates_intervals_Z):
+    arrvectors=[]
+    vector=[]
+    for arr in range(len(array_of_coordinates_intervals_X)):###он получает список массивов
+        x = np.array(array_of_coordinates_intervals_X[arr])
+        y = np.array(array_of_coordinates_intervals_Y[arr])
+        z = np.array(array_of_coordinates_intervals_Z[arr])
+        for element_index in range(len(x)):
+            v = np.math.sqrt((np.math.pow(x[element_index], 2) + np.math.pow(y[element_index], 2) + np.math.pow(z[element_index], 2)))
+            vector.append(v)
+        arrvectors.append(vector)
+    return arrvectors
