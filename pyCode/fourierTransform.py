@@ -1,7 +1,5 @@
-from math import sqrt
-
 import numpy as np
-import matplotlib.pyplot as plt
+from scipy import signal
 
 from pyCode.extractData import csv_reader
 
@@ -36,7 +34,7 @@ def make_array_of_frequencies (vector_of_accelerations):
     for df in vector_of_accelerations:
         FFT_data = np.fft.fft(df[:])
         freq = np.fft.fftfreq(np.array(FFT_data).shape[-1], d=sampling_rate)
-        array_of_frequencies.append(freq)
+        array_of_frequencies.append(np.abs(freq))
     return array_of_frequencies
 
 def make_intervals(time,coord):##Разбиение данных на интервалы
@@ -53,7 +51,7 @@ def work_with_coordinates(coord):###Фильтрация данных и пре�
 def interval_calculation(tm, cd):
     tm_max = tm.max()
     points_per_second = cd.size // tm_max
-    size_of_interval = points_per_second.astype(int) * 10
+    size_of_interval = points_per_second.astype(int) * 10000
     return size_of_interval
 
 def creating_intervals(int_size, coords):
@@ -71,7 +69,8 @@ def data_normalisation(req, length):
     return np.convolve(req, ir, mode='same')
 
 def filter_record(record, filter_value):
-    filt_record = data_normalisation(record, filter_value)
+    filt_rec = data_normalisation(record, filter_value)
+    filt_record=median_filter(filt_rec)
     return filt_record
 
 def create_vector_of_acceleration(array_of_coordinates_intervals_X, array_of_coordinates_intervals_Y, array_of_coordinates_intervals_Z):
@@ -86,3 +85,8 @@ def create_vector_of_acceleration(array_of_coordinates_intervals_X, array_of_coo
             vector.append(v)
         arrvectors.append(vector)
     return arrvectors
+
+def median_filter(data):
+    dat=np.array(data)
+    f_data=signal.medfilt(dat)
+    return f_data

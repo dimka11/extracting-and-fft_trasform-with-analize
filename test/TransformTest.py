@@ -4,7 +4,8 @@ import numpy as np
 
 from pyCode.extractData import csv_reader
 from pyCode.fourierTransform import work_with_coordinates, make_intervals, interval_calculation, fft_transform, \
-    data_transform
+    data_transform, median_filter
+from pyCode.get_Data import transformData, make_one_DataFrame
 
 
 class MyTestCase(unittest.TestCase):
@@ -38,13 +39,14 @@ class MyTestCase(unittest.TestCase):
             self.assertEqual(ic.astype(int),1490)
 
     def test_make_array(self):
-        with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\Accelerometer.csv", 'r') as f_obj:
+        with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\ACCELEROMETER.csv", 'r') as f_obj:
             reader = csv_reader(f_obj)
             reader.columns = ['timestamp', 'x', 'y', 'z']
             df = reader['z']
             time = np.array(reader['timestamp'])
             coord_inter=make_intervals(time,df)
-            self.assertEqual(np.array(coord_inter).size,2)
+            print(len(coord_inter))
+            #self.assertEqual(np.array(coord_inter).size,2)
 
     def test_frequencies(self):
         with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\Accelerometer.csv", 'r') as f_obj:
@@ -64,6 +66,19 @@ class MyTestCase(unittest.TestCase):
             plt.grid()
             plt.show()
 
+    def test_median_filter_data(self):
+        with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\Accelerometer.csv", 'r') as f_obj:
+            reader = csv_reader(f_obj)
+            reader.columns = ['timestamp', 'x', 'y', 'z']
+            dz=reader['x']
+            df =reader['x']
+            filt_coord = median_filter(df)
+            first_data = dz[0:500]
+            first_data.plot()
+            plt.plot(filt_coord, 'r')
+            plt.grid()
+            plt.show()
+
     def test_vector(self):
         with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\Accelerometer.csv", 'r') as f_obj:
             data=data_transform(f_obj)
@@ -71,3 +86,39 @@ class MyTestCase(unittest.TestCase):
             plt.plot(df[0:500])
             plt.grid()
             plt.show()
+
+    def test_median_and_M_filter_data(self):
+        with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\Accelerometer.csv", 'r') as f_obj:
+            reader = csv_reader(f_obj)
+            reader.columns = ['timestamp', 'x', 'y', 'z']
+            df = reader['x']
+            filt_coord = work_with_coordinates(df)
+            filt_coord2=median_filter((filt_coord))
+            first_data = df.iloc[0:500]
+            first_data.plot()
+            plt.plot(filt_coord2[0:500])
+            plt.grid()
+            plt.show()
+
+    def test_freq(self):
+        with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\Accelerometer.csv", 'r') as f_obj:
+            data = data_transform(f_obj)
+            fftDat=fft_transform(data)
+            ax=fftDat[0]
+            print(len(ax))
+            plt.plot(ax, data[0])
+            plt.grid()
+            plt.show()
+
+
+    def test_join_data(self):
+        with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\ACCELEROMETER.csv", 'r') as f_obj:
+            data=data_transform(f_obj)
+            freq_Of_Shapes = fft_transform(data)
+        with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\ACCELEROMETER1.csv", 'r') as f_obj1:
+            data2=data_transform(f_obj1)
+            freq_Of_Run=fft_transform(data2)
+        trdf1=transformData(freq_Of_Shapes, 'Walking')
+        trdf2=transformData(freq_Of_Run, 'Running')
+        result=make_one_DataFrame(trdf1,trdf2)
+        print(result.iloc[0:50])
