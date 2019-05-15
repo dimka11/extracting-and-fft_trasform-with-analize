@@ -5,7 +5,7 @@ import numpy as np
 from pyCode.extractData import csv_reader
 from pyCode.fourierTransform import work_with_coordinates, make_intervals, interval_calculation, fft_transform, \
     data_transform, median_filter
-from pyCode.get_Data import transformData, make_one_DataFrame
+from pyCode.get_Data import transformData, make_one_DataFrame, csv_dict_writer
 
 
 class MyTestCase(unittest.TestCase):
@@ -29,14 +29,16 @@ class MyTestCase(unittest.TestCase):
             plt.show()
 
     def test_size_of_interval(self):
-        with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\Accelerometer.csv", 'r') as f_obj:
+        with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\WALKING.csv", 'r') as f_obj:
             reader = csv_reader(f_obj)
             reader.columns = ['timestamp', 'x', 'y', 'z']
             time = np.array(reader['timestamp'])
             df = reader['x']
             coord=work_with_coordinates(df)
             ic=interval_calculation(time, coord)
-            self.assertEqual(ic.astype(int),1490)
+            self.assertEqual(ic,1492)
+
+
 
     def test_make_array(self):
         with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\ACCELEROMETER.csv", 'r') as f_obj:
@@ -45,8 +47,7 @@ class MyTestCase(unittest.TestCase):
             df = reader['z']
             time = np.array(reader['timestamp'])
             coord_inter=make_intervals(time,df)
-            print(len(coord_inter))
-            #self.assertEqual(np.array(coord_inter).size,2)
+            self.assertEqual(np.array(coord_inter).size,264)
 
     def test_frequencies(self):
         with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\Accelerometer.csv", 'r') as f_obj:
@@ -120,5 +121,13 @@ class MyTestCase(unittest.TestCase):
             freq_Of_Run=fft_transform(data2)
         trdf1=transformData(freq_Of_Shapes, 'Walking')
         trdf2=transformData(freq_Of_Run, 'Running')
-        result=make_one_DataFrame(trdf1,trdf2)
-        print(result.iloc[0:50])
+        result=make_one_DataFrame(trdf2, trdf1)
+        print(result[0:250])
+
+
+    def test_writer(self):
+             with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\WALKING.csv", 'r') as f_obj:
+                 data = data_transform(f_obj)
+                 freq_Of_Shapes = fft_transform(data)
+                 trdf1 = transformData(freq_Of_Shapes, 'WALKING')
+                 csv_dict_writer('out.csv',trdf1)

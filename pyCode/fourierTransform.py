@@ -49,15 +49,15 @@ def work_with_coordinates(coord):###Фильтрация данных и пре�
     return crd
 
 def interval_calculation(tm, cd):
-    tm_max = tm.max()
-    points_per_second = cd.size // tm_max
-    size_of_interval = points_per_second.astype(int) * 10000
-    return size_of_interval
+    tm_max = (tm.max()-tm.min())/1000
+    points_per_second = cd.size / tm_max
+    size_of_interval = points_per_second * 10
+    return size_of_interval.astype(int)
 
 def creating_intervals(int_size, coords):
     data_intervals = []
     i = 0
-    size_of_interval = int_size.astype(int)
+    size_of_interval = int_size
     while i < len(coords):
         chunk = coords[i:i + size_of_interval]
         data_intervals.append(chunk)
