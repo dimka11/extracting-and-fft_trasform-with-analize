@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 from pyCode.fourierTransform import data_transform, fft_transform
 
@@ -14,7 +15,7 @@ def make_one_DataFrame(*transformdata):
     return DATA
 
 def csv_dict_writer(path,data):
-    data.to_csv(path, index=False)
+    data.to_csv(path, index=False,doublequote=False,sep = ',' )
 
 
 if __name__ =="__main__":
@@ -48,4 +49,4 @@ if __name__ =="__main__":
         trdf9 = transformData(freq_Of_Shapes8, 'Walking')
     result = make_one_DataFrame(trdf1, trdf2, trdf3, trdf4, trdf5, trdf8, trdf9)
 
-    csv_dict_writer('Data.csv', result)
+    csv_dict_writer('Data1.csv', result)

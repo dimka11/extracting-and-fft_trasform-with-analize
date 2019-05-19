@@ -1,3 +1,4 @@
+import pandas as pd
 import unittest
 import matplotlib.pyplot as plt
 import numpy as np
@@ -131,3 +132,5 @@ class MyTestCase(unittest.TestCase):
                  freq_Of_Shapes = fft_transform(data)
                  trdf1 = transformData(freq_Of_Shapes, 'WALKING')
                  csv_dict_writer('out.csv',trdf1)
+
+
