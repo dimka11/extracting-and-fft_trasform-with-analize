@@ -41,12 +41,12 @@ def dit_c():
 if __name__ == "__main__":
 
     with open(dpath + "Down.csv", 'r') as f_obj:
-        data = data_transform(f_obj) #  36 одинаковых
+        data = data_transform(f_obj) #  36 уже разных
         freq_Of_ShapesDown = fft_transform(data)
 
         #print(np.array(freq_Of_ShapesDown).shape)
         #print(freq_Of_ShapesDown[1])
-        #np.savetxt("foo123.csv", freq_Of_ShapesDown[1], delimiter=",", fmt='%f') # save array to file
+        np.savetxt("foo123.csv", freq_Of_ShapesDown[1], delimiter=",", fmt='%f') # save array to file
     with open(dpath + "Run(soft).csv", 'r') as f_obj2:
         data1 = data_transform(f_obj2)
         freq_Of_ShapesRun = fft_transform(data1)

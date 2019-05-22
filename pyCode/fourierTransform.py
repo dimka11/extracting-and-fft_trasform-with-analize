@@ -7,20 +7,8 @@ from pyCode.extractData import csv_reader
 def data_transform(file_obj):
     coordinates = csv_reader(file_obj)
     coordinates.columns = ['timestamp', 'x', 'y', 'z']
-    time = np.array(coordinates['timestamp'])
-
-    coordX = coordinates['x']
-    coordY = coordinates['y']
-    coordZ = coordinates['z']
-
-    array_of_coordinatesX_intervals = make_intervals(coordX)
-    array_of_coordinatesY_intervals = make_intervals(coordY)
-    array_of_coordinatesZ_intervals = make_intervals(coordZ)
-    vector_of_accelerations = create_vector_of_acceleration(array_of_coordinatesX_intervals,
-                                                            array_of_coordinatesY_intervals,
-                                                            array_of_coordinatesZ_intervals)
-
-    return vector_of_accelerations
+    coordV = coordinates['magnitude'] = np.sqrt(coordinates['x']**2 + coordinates['y']**2 + coordinates['y']**2)
+    return make_intervals(coordV)
 
 def fft_transform(vector_of_accelerations):
     freq = make_array_of_frequencies(vector_of_accelerations)
