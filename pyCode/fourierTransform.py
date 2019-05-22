@@ -15,12 +15,15 @@ def fft_transform(vector_of_accelerations):
     return freq
 
 def make_array_of_frequencies (vector_of_accelerations):
-    sampling_rate = .00588
+    sampling_rate = .00588  # его нужно вычислять т.к. он разный в разных файлах
     array_of_frequencies = []
+
     for df in vector_of_accelerations:
             FFT_data = np.fft.fft(df[:])
-            freq = np.fft.fftfreq(np.array(FFT_data).shape[-1], d=sampling_rate)
-            array_of_frequencies.append(np.abs(freq))
+            #freq = np.fft.fftfreq(np.array(FFT_data).shape[-1], d=sampling_rate)
+            #freq = np.fft.fftfreq(FFT_data.size, d=sampling_rate) # что то не то
+            #array_of_frequencies.append(np.abs(freq))
+            array_of_frequencies.append(np.abs(FFT_data))  # хз
     return array_of_frequencies
 
 def make_intervals(coord):##Разбиение данных на интервалы
