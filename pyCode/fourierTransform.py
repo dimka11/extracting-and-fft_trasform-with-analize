@@ -13,16 +13,14 @@ def data_transform(file_obj):
     coordY = coordinates['y']
     coordZ = coordinates['z']
 
-    array_of_coordinatesX_intervals = make_intervals(time,coordX)
-    array_of_coordinatesY_intervals = make_intervals(time, coordY)
-    array_of_coordinatesZ_intervals = make_intervals(time, coordZ)
-    vector_of_accelerations = create_vector_of_acceleration(array_of_coordinatesX_intervals,array_of_coordinatesY_intervals ,array_of_coordinatesZ_intervals)
-    vector = []
-    for vect in vector_of_accelerations:
-        changedVect = work_with_coordinates(vect)
-        vector.append(changedVect)
-    vector_of_acc = np.array(vector)
-    return vector_of_acc
+    array_of_coordinatesX_intervals = make_intervals(coordX)
+    array_of_coordinatesY_intervals = make_intervals(coordY)
+    array_of_coordinatesZ_intervals = make_intervals(coordZ)
+    vector_of_accelerations = create_vector_of_acceleration(array_of_coordinatesX_intervals,
+                                                            array_of_coordinatesY_intervals,
+                                                            array_of_coordinatesZ_intervals)
+
+    return vector_of_accelerations
 
 def fft_transform(vector_of_accelerations):
     freq = make_array_of_frequencies(vector_of_accelerations)
@@ -32,13 +30,13 @@ def make_array_of_frequencies (vector_of_accelerations):
     sampling_rate = .00588
     array_of_frequencies = []
     for df in vector_of_accelerations:
-        FFT_data = np.fft.fft(df[:])
-        freq = np.fft.fftfreq(np.array(FFT_data).shape[-1], d=sampling_rate)
-        array_of_frequencies.append(np.abs(freq))
+            FFT_data = np.fft.fft(df[:])
+            freq = np.fft.fftfreq(np.array(FFT_data).shape[-1], d=sampling_rate)
+            array_of_frequencies.append(np.abs(freq))
     return array_of_frequencies
 
-def make_intervals(time,coord):##Разбиение данных на интервалы
-    ic = interval_calculation(time, coord)
+def make_intervals(coord):##Разбиение данных на интервалы
+    ic = 500
     array_of_coordinates_intervals = creating_intervals(ic, coord)
     return array_of_coordinates_intervals
 

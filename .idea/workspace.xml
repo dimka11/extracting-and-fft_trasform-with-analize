@@ -13,8 +13,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pyCode/fourierTransform.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="53" column="45" lean-forward="true" selection-start-line="53" selection-start-column="45" selection-end-line="53" selection-end-column="45" />
+            <state relative-caret-position="144">
+              <caret line="16" column="60" lean-forward="true" selection-start-line="16" selection-start-column="60" selection-end-line="16" selection-end-column="60" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -22,11 +22,46 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/TransformTest.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="84">
+              <caret line="46" column="30" selection-start-line="46" selection-start-column="30" selection-end-line="46" selection-end-column="30" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+                <element signature="e#730#1148#0" />
+                <element signature="e#1195#1589#0" />
+                <element signature="e#1632#2010#0" />
+                <element signature="e#2154#2603#0" />
+                <element signature="e#2652#3085#0" />
+                <element signature="e#3122#3294#0" />
+                <element signature="e#3350#3825#0" />
+                <element signature="e#3860#4229#0" />
+                <element signature="e#4270#4800#0" />
+                <element signature="e#4843#5085#0" />
+                <element signature="e#5117#5412#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pyCode/get_Data.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-746">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pyCode/data_preparation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="20" column="91" selection-start-line="20" selection-start-column="91" selection-end-line="20" selection-end-column="91" />
+            <state relative-caret-position="-68">
+              <caret line="100" lean-forward="true" selection-start-line="100" selection-end-line="100" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -54,18 +89,19 @@
         <option value="$PROJECT_DIR$/pyCode/Train_Model.py" />
         <option value="$PROJECT_DIR$/pyCode/Writing_in_set_With_labels.py" />
         <option value="$PROJECT_DIR$/pyCode/extractData.py" />
+        <option value="$PROJECT_DIR$/pyCode/get_data_set.py" />
+        <option value="$PROJECT_DIR$/pyCode/transform_another_dat.py" />
+        <option value="$PROJECT_DIR$/pyCode/data_preparation.py" />
         <option value="$PROJECT_DIR$/pyCode/get_Data.py" />
         <option value="$PROJECT_DIR$/test/TransformTest.py" />
-        <option value="$PROJECT_DIR$/pyCode/get_data_set.py" />
         <option value="$PROJECT_DIR$/pyCode/fourierTransform.py" />
-        <option value="$PROJECT_DIR$/pyCode/data_preparation.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="579" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="197" />
     <option name="y" value="40" />
-    <option name="width" value="794" />
+    <option name="width" value="697" />
     <option name="height" value="735" />
   </component>
   <component name="ProjectView">
@@ -98,7 +134,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="C:/Anakonda/envs" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -118,7 +154,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.data_preparation">
+  <component name="RunManager" selected="Python.get_Data">
     <configuration name="data_preparation" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="tensorflow1" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -140,7 +176,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="get_data_set" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="get_Data" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="tensorflow1" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -152,7 +188,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pyCode/get_data_set.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pyCode/get_Data.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -161,7 +197,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for TransformTest.MyTestCase.test_gettingFreq" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for TransformTest.MyTestCase.test_join_data" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="tensorflow1" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -171,11 +207,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;TransformTest.MyTestCase.test_gettingFreq&quot;" />
+      <option name="_new_target" value="&quot;TransformTest.MyTestCase.test_join_data&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for TransformTest.MyTestCase.test_gettingLeb" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for TransformTest.MyTestCase.test_vector" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="tensorflow1" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -185,11 +221,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;TransformTest.MyTestCase.test_gettingLeb&quot;" />
+      <option name="_new_target" value="&quot;TransformTest.MyTestCase.test_vector&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for TransformTest.MyTestCase.test_wr" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for TransformTest.MyTestCase.test_ww" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="tensorflow1" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -199,17 +235,17 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;TransformTest.MyTestCase.test_wr&quot;" />
+      <option name="_new_target" value="&quot;TransformTest.MyTestCase.test_ww&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.get_Data" />
         <item itemvalue="Python.data_preparation" />
-        <item itemvalue="Python tests.Unittests for TransformTest.MyTestCase.test_wr" />
-        <item itemvalue="Python tests.Unittests for TransformTest.MyTestCase.test_gettingLeb" />
-        <item itemvalue="Python tests.Unittests for TransformTest.MyTestCase.test_gettingFreq" />
-        <item itemvalue="Python.get_data_set" />
+        <item itemvalue="Python tests.Unittests for TransformTest.MyTestCase.test_ww" />
+        <item itemvalue="Python tests.Unittests for TransformTest.MyTestCase.test_vector" />
+        <item itemvalue="Python tests.Unittests for TransformTest.MyTestCase.test_join_data" />
       </list>
     </recent_temporary>
   </component>
@@ -227,35 +263,35 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_for_TransformTest_MyTestCase_test_wr - 2019.05.19 at 20h 42m 24s.xml">
-      <configuration name="Unittests for TransformTest.MyTestCase.test_wr" configurationId="tests" />
+    <history-entry file="Unittests_for_TransformTest_MyTestCase_test_join_data - 2019.05.22 at 19h 49m 01s.xml">
+      <configuration name="Unittests for TransformTest.MyTestCase.test_join_data" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_TransformTest_MyTestCase_test_wr - 2019.05.19 at 20h 42m 35s.xml">
-      <configuration name="Unittests for TransformTest.MyTestCase.test_wr" configurationId="tests" />
+    <history-entry file="Unittests_for_TransformTest_MyTestCase_test_ww - 2019.05.22 at 19h 56m 02s.xml">
+      <configuration name="Unittests for TransformTest.MyTestCase.test_ww" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_TransformTest_MyTestCase_test_wr - 2019.05.19 at 20h 42m 42s.xml">
-      <configuration name="Unittests for TransformTest.MyTestCase.test_wr" configurationId="tests" />
+    <history-entry file="Unittests_for_TransformTest_MyTestCase_test_vector - 2019.05.22 at 21h 29m 34s.xml">
+      <configuration name="Unittests for TransformTest.MyTestCase.test_vector" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_TransformTest_MyTestCase_test_wr - 2019.05.19 at 20h 42m 53s.xml">
-      <configuration name="Unittests for TransformTest.MyTestCase.test_wr" configurationId="tests" />
+    <history-entry file="Unittests_for_TransformTest_MyTestCase_test_vector - 2019.05.22 at 21h 29m 43s.xml">
+      <configuration name="Unittests for TransformTest.MyTestCase.test_vector" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_TransformTest_MyTestCase_test_wr - 2019.05.19 at 20h 43m 05s.xml">
-      <configuration name="Unittests for TransformTest.MyTestCase.test_wr" configurationId="tests" />
+    <history-entry file="Unittests_for_TransformTest_MyTestCase_test_vector - 2019.05.22 at 21h 30m 14s.xml">
+      <configuration name="Unittests for TransformTest.MyTestCase.test_vector" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_TransformTest_MyTestCase_test_wr - 2019.05.19 at 20h 43m 20s.xml">
-      <configuration name="Unittests for TransformTest.MyTestCase.test_wr" configurationId="tests" />
+    <history-entry file="Unittests_for_TransformTest_MyTestCase_test_vector - 2019.05.22 at 21h 30m 41s.xml">
+      <configuration name="Unittests for TransformTest.MyTestCase.test_vector" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_TransformTest_MyTestCase_test_wr - 2019.05.19 at 20h 43m 30s.xml">
-      <configuration name="Unittests for TransformTest.MyTestCase.test_wr" configurationId="tests" />
+    <history-entry file="Unittests_for_TransformTest_MyTestCase_test_vector - 2019.05.22 at 21h 33m 18s.xml">
+      <configuration name="Unittests for TransformTest.MyTestCase.test_vector" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_TransformTest_MyTestCase_test_wr - 2019.05.19 at 20h 54m 32s.xml">
-      <configuration name="Unittests for TransformTest.MyTestCase.test_wr" configurationId="tests" />
+    <history-entry file="Unittests_for_TransformTest_MyTestCase_test_vector - 2019.05.22 at 21h 35m 11s.xml">
+      <configuration name="Unittests for TransformTest.MyTestCase.test_vector" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_TransformTest_MyTestCase_test_wr - 2019.05.19 at 20h 54m 39s.xml">
-      <configuration name="Unittests for TransformTest.MyTestCase.test_wr" configurationId="tests" />
+    <history-entry file="Unittests_for_TransformTest_MyTestCase_test_ww - 2019.05.22 at 22h 47m 21s.xml">
+      <configuration name="Unittests for TransformTest.MyTestCase.test_ww" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_TransformTest_MyTestCase_test_wr - 2019.05.19 at 20h 54m 48s.xml">
-      <configuration name="Unittests for TransformTest.MyTestCase.test_wr" configurationId="tests" />
+    <history-entry file="Unittests_for_TransformTest_MyTestCase_test_ww - 2019.05.22 at 22h 47m 46s.xml">
+      <configuration name="Unittests for TransformTest.MyTestCase.test_ww" configurationId="tests" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -276,7 +312,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3289689" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49702382" weight="0.40589198" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49702382" visible="true" weight="0.40261865" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39934534" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -334,33 +370,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyCode/get_data_set.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/TransformTest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="458">
-          <caret line="136" selection-start-line="136" selection-end-line="136" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyCode/get_Data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-66">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/pyCode/get_data_set.py" />
     <entry file="file://$PROJECT_DIR$/pyCode/extractData.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -371,32 +381,78 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyCode/fourierTransform.py">
+    <entry file="file://$PROJECT_DIR$/pyCode/Train_Model.py" />
+    <entry file="file://$PROJECT_DIR$/pyCode/transform_another_dat.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="53" column="45" lean-forward="true" selection-start-line="53" selection-start-column="45" selection-end-line="53" selection-end-column="45" />
+        <state relative-caret-position="139">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyCode/Train_Model.py">
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+        <state relative-caret-position="214">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/FFT/extracting-and-fft_trasform-with-analize/pyCode/fourierTransform.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="24" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/TransformTest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="46" column="30" selection-start-line="46" selection-start-column="30" selection-end-line="46" selection-end-column="30" />
           <folding>
-            <element signature="e#0#34#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#730#1148#0" />
+            <element signature="e#1195#1589#0" />
+            <element signature="e#1632#2010#0" />
+            <element signature="e#2154#2603#0" />
+            <element signature="e#2652#3085#0" />
+            <element signature="e#3122#3294#0" />
+            <element signature="e#3350#3825#0" />
+            <element signature="e#3860#4229#0" />
+            <element signature="e#4270#4800#0" />
+            <element signature="e#4843#5085#0" />
+            <element signature="e#5117#5412#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyCode/fourierTransform.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="16" column="60" lean-forward="true" selection-start-line="16" selection-start-column="60" selection-end-line="16" selection-end-column="60" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pyCode/data_preparation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="20" column="91" selection-start-line="20" selection-start-column="91" selection-end-line="20" selection-end-column="91" />
+        <state relative-caret-position="-68">
+          <caret line="100" lean-forward="true" selection-start-line="100" selection-end-line="100" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyCode/get_Data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-746">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>

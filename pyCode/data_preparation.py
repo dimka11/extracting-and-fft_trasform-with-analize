@@ -4,36 +4,61 @@ import tensorflow as tf
 import numpy as np
 from tensorflow.contrib.learn.python.learn.estimators._sklearn import train_test_split
 
+from pyCode.fourierTransform import data_transform, fft_transform
+from pyCode.get_Data import  make_one_DataArray, make_array_Labels
+
 RANDOM_SEED = 42
-N_CLASSES = 4
+N_CLASSES = 5
 N_FEATURES=1
 N_HIDDEN_UNITS = 64
-N_TIME_STEPS=71 ## количество примеров//данных НЕОБХОДИМО УЗНАТЬ И ПОДСТАВИТЬ КОЛИЧЕСТВО ДАННЫХ ДЛЯ ОБУЧЕНИЯ
+N_TIME_STEPS=500 ## количество примеров//данных НЕОБХОДИМО УЗНАТЬ И ПОДСТАВИТЬ КОЛИЧЕСТВО ДАННЫХ ДЛЯ ОБУЧЕНИЯ
+
 
 def create_segments():
-     with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\pyCode\Data.csv", 'r') as f_obj:
-        segments = []
-        columns = ['label','frequencies']
-        df = pd.read_csv(f_obj, header=None, names=columns)
-        for i in range(0,len(df)):
-            seg=df['frequencies']
-            segments.append(np.float32(seg[i]))
-        reshaped_segments = np.asarray(segments, dtype=np.float32).reshape(-1, N_TIME_STEPS)
-        return np.array(reshaped_segments)
+    with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\Down.csv", 'r') as f_obj:
+        data = data_transform(f_obj)
+        freq_Of_ShapesDown = fft_transform(data)
+        labelDown=make_array_Labels('Down',len(freq_Of_ShapesDown))
+    with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\Run(soft).csv", 'r') as f_obj2:
+        data1 = data_transform(f_obj2)
+        freq_Of_ShapesRun = fft_transform(data1)
+    with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\Run9.csv", 'r') as f_obj3:
+        data2 = data_transform(f_obj3)
+        freq_Of_ShapesRun2 = fft_transform(data2)
+        runArray = make_one_DataArray(freq_Of_ShapesRun, freq_Of_ShapesRun2)
+        labelRun = make_array_Labels('Run', len(runArray))
+    with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\Up.csv", 'r') as f_obj4:
+        data3 = data_transform(f_obj4)
+        freq_Of_ShapesUp = fft_transform(data3)
+        labelUp = make_array_Labels('Up', len(freq_Of_ShapesUp))
+    with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\Walk(soft).csv", 'r') as f_obj5:
+        data4 = data_transform(f_obj5)
+        freq_Of_Shapes4 = fft_transform(data4)
+    with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\Walking7.csv", 'r') as f_obj8:
+        data7 = data_transform(f_obj8)
+        freq_Of_Shapes7 = fft_transform(data7)
+    with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\Walking8.csv", 'r') as f_obj9:
+        data8 = data_transform(f_obj9)
+        freq_Of_Shapes8 = fft_transform(data8)
+        walking = make_one_DataArray(freq_Of_Shapes4, freq_Of_Shapes7, freq_Of_Shapes8)
+        labelWalk = make_array_Labels('Walk', len(walking))
+    with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\Standing.csv", 'r') as f_obj10:
+        data9 = data_transform(f_obj10)
+        freq_Of_Stand = fft_transform(data9)
+        labelStand = make_array_Labels('Standing', len(freq_Of_Stand))
+    lendat = len(freq_Of_ShapesDown) + len(runArray) + len(freq_Of_ShapesUp) + len(walking)+len(freq_Of_Stand)
 
-def create_labels():
-         with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\pyCode\Data.csv", 'r') as f_obj:
-            labels = []
-            columns = ['label', 'frequencies']
-            df = pd.read_csv(f_obj, header=None, names=columns)
-            for i in range(0, len(df)):
-                label = df['label']
-                labels.append(label[i])
-            labels = np.asarray(pd.get_dummies(labels), dtype=np.float32)
-            return (labels)
+    segments=0
+    labels=0
+    for i in range(0, lendat):
+        segments=make_one_DataArray(freq_Of_ShapesDown,runArray,freq_Of_ShapesUp,walking,freq_Of_Stand)
+        labels=make_one_DataArray(labelDown,labelRun,labelUp,labelWalk,labelStand)
+    print(np.array(segments).shape)
+    reshaped_segments = np.asarray(segments, dtype=np.float32).reshape(-1, N_TIME_STEPS)
+    labels = np.asarray(pd.get_dummies(labels), dtype=np.float32)
+    return (np.array(reshaped_segments),labels)
 
-segments=create_segments()
-labels=create_labels()
+segments,labels=create_segments()
 
 X_train, X_test, y_train, y_test = train_test_split(segments, labels, test_size=0.2, random_state=RANDOM_SEED)
 

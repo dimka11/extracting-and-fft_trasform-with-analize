@@ -1,3 +1,5 @@
+import csv
+
 import pandas as pd
 import unittest
 import matplotlib.pyplot as plt
@@ -6,7 +8,8 @@ import numpy as np
 from pyCode.extractData import csv_reader
 from pyCode.fourierTransform import work_with_coordinates, make_intervals, interval_calculation, fft_transform, \
     data_transform, median_filter
-from pyCode.get_Data import transformData, make_one_DataFrame, csv_dict_writer
+from pyCode.get_Data import transformData, \
+    make_one_DataArray, ab
 
 
 class MyTestCase(unittest.TestCase):
@@ -47,7 +50,7 @@ class MyTestCase(unittest.TestCase):
             reader.columns = ['timestamp', 'x', 'y', 'z']
             df = reader['z']
             time = np.array(reader['timestamp'])
-            coord_inter=make_intervals(time,df)
+            coord_inter=make_intervals(df)
             self.assertEqual(np.array(coord_inter).size,264)
 
     def test_frequencies(self):
@@ -82,12 +85,11 @@ class MyTestCase(unittest.TestCase):
             plt.show()
 
     def test_vector(self):
-        with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\Accelerometer.csv", 'r') as f_obj:
+        with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\Data\Run9.csv", 'r') as f_obj:
             data=data_transform(f_obj)
-            df=np.array(data[0])
-            plt.plot(df[0:500])
-            plt.grid()
-            plt.show()
+            df=data[0][:]
+            print(df)
+
 
     def test_median_and_M_filter_data(self):
         with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\Accelerometer.csv", 'r') as f_obj:
@@ -103,34 +105,39 @@ class MyTestCase(unittest.TestCase):
             plt.show()
 
     def test_freq(self):
-        with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\Accelerometer.csv", 'r') as f_obj:
+        with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\Data\Run9.csv", 'r') as f_obj:
             data = data_transform(f_obj)
             fftDat=fft_transform(data)
             ax=fftDat[0]
-            print(len(ax))
-            plt.plot(ax, data[0])
+            r=data[0]
+            print(np.array(ax).shape, ',',np.array(r).shape)
+            plt.plot(ax, np.array(r).transpose())
             plt.grid()
             plt.show()
 
 
     def test_join_data(self):
-        with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\ACCELEROMETER.csv", 'r') as f_obj:
+        with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\Walk(soft).csv", 'r') as f_obj:
             data=data_transform(f_obj)
             freq_Of_Shapes = fft_transform(data)
-        with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\ACCELEROMETER1.csv", 'r') as f_obj1:
+        with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\Walking1.csv", 'r') as f_obj1:
             data2=data_transform(f_obj1)
-            freq_Of_Run=fft_transform(data2)
-        trdf1=transformData(freq_Of_Shapes, 'Walking')
-        trdf2=transformData(freq_Of_Run, 'Running')
-        result=make_one_DataFrame(trdf2, trdf1)
-        print(result[0:250])
+            freq_Of_Shapes2=fft_transform(data2)
+        result=make_one_DataArray(freq_Of_Shapes, freq_Of_Shapes2)
+        print(len(freq_Of_Shapes), len(freq_Of_Shapes2))
+        print('result:', len(result))
 
 
     def test_writer(self):
              with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\WALKING.csv", 'r') as f_obj:
                  data = data_transform(f_obj)
                  freq_Of_Shapes = fft_transform(data)
-                 trdf1 = transformData(freq_Of_Shapes, 'WALKING')
-                 csv_dict_writer('out.csv',trdf1)
+                 np.savetxt('out.csv',freq_Of_Shapes)
 
+    def test_w(self):
+        with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\Walk(soft).csv", 'r') as f_obj5:
+            data4 = data_transform(f_obj5)
+            freq_Of_Shapes4 = fft_transform(data4)
+            trdf5 = transformData(freq_Of_Shapes4, 'Walking')
+        plt.plot(freq_Of_Shapes4[0], data4[0])
 
