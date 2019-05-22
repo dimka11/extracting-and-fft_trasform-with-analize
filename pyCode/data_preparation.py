@@ -2,6 +2,7 @@ import pandas as pd
 
 import tensorflow as tf
 import numpy as np
+import os
 from tensorflow.contrib.learn.python.learn.estimators._sklearn import train_test_split
 
 from pyCode.fourierTransform import data_transform, fft_transform
@@ -13,36 +14,39 @@ N_FEATURES=1
 N_HIDDEN_UNITS = 64
 N_TIME_STEPS=500 ## количество примеров//данных НЕОБХОДИМО УЗНАТЬ И ПОДСТАВИТЬ КОЛИЧЕСТВО ДАННЫХ ДЛЯ ОБУЧЕНИЯ
 
+cpath = os.path.dirname(__file__)  # pycode folder (should folder where script is run)
+dpath = cpath + "/../DATA/"  # path to data that above pycode folder
+
 
 def create_segments():
-    with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\Down.csv", 'r') as f_obj:
+    with open(dpath + "Down.csv", 'r') as f_obj:
         data = data_transform(f_obj)
         freq_Of_ShapesDown = fft_transform(data)
-        labelDown=make_array_Labels('Down',len(freq_Of_ShapesDown))
-    with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\Run(soft).csv", 'r') as f_obj2:
+        labelDown = make_array_Labels('Down',len(freq_Of_ShapesDown))
+    with open(dpath + "Run(soft).csv", 'r') as f_obj2:
         data1 = data_transform(f_obj2)
         freq_Of_ShapesRun = fft_transform(data1)
-    with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\Run9.csv", 'r') as f_obj3:
+    with open(dpath + "Run9.csv", 'r') as f_obj3:
         data2 = data_transform(f_obj3)
         freq_Of_ShapesRun2 = fft_transform(data2)
         runArray = make_one_DataArray(freq_Of_ShapesRun, freq_Of_ShapesRun2)
         labelRun = make_array_Labels('Run', len(runArray))
-    with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\Up.csv", 'r') as f_obj4:
+    with open(dpath + "Up.csv", 'r') as f_obj4:
         data3 = data_transform(f_obj4)
         freq_Of_ShapesUp = fft_transform(data3)
         labelUp = make_array_Labels('Up', len(freq_Of_ShapesUp))
-    with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\Walk(soft).csv", 'r') as f_obj5:
+    with open(dpath + "Walk(soft).csv", 'r') as f_obj5:
         data4 = data_transform(f_obj5)
         freq_Of_Shapes4 = fft_transform(data4)
-    with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\Walking7.csv", 'r') as f_obj8:
+    with open(dpath + "Walking7.csv", 'r') as f_obj8:
         data7 = data_transform(f_obj8)
         freq_Of_Shapes7 = fft_transform(data7)
-    with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\Walking8.csv", 'r') as f_obj9:
+    with open(dpath + "Walking8.csv", 'r') as f_obj9:
         data8 = data_transform(f_obj9)
         freq_Of_Shapes8 = fft_transform(data8)
         walking = make_one_DataArray(freq_Of_Shapes4, freq_Of_Shapes7, freq_Of_Shapes8)
         labelWalk = make_array_Labels('Walk', len(walking))
-    with open(r"C:\Users\Алена\PycharmProjects\tensorflow1\DATA\Standing.csv", 'r') as f_obj10:
+    with open(dpath + "Standing.csv", 'r') as f_obj10:
         data9 = data_transform(f_obj10)
         freq_Of_Stand = fft_transform(data9)
         labelStand = make_array_Labels('Standing', len(freq_Of_Stand))
