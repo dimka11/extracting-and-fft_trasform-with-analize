@@ -44,12 +44,22 @@ def dit_c():
 if __name__ == "__main__":
 
     with open(dpath + "Down.csv", 'r') as f_obj:
-        data = data_transform(f_obj) #  36 уже разных
+        data = data_transform(f_obj)
         freq_Of_ShapesDown = fft_transform(data)
-        #l=[freq_Of_ShapesDown[1]]
-        #print(freq_Of_ShapesDown[1])
-        a=make_array(freq_Of_ShapesDown)
-        #print(a[10])
+
+        rows = 40
+        cols = 450
+        a = np.zeros(shape=(rows, cols))
+        indexer = 0
+        for index, i in enumerate(freq_Of_ShapesDown):
+            if i.size != cols:
+                b = np.zeros(cols - i.size)
+                c = np.concatenate([i, b])
+                a[index] = c
+                continue
+            a[index] = i
+        print('place for debug breakpoint')
+
     with open(dpath + "Run(soft).csv", 'r') as f_obj2:
         data1 = data_transform(f_obj2)
         freq_Of_ShapesRun = fft_transform(data1)
