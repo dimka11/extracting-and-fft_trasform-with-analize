@@ -9,12 +9,15 @@ from pyCode.fourierTransform import data_transform, fft_transform
 
 cpath = os.path.dirname(__file__)  # pycode folder (should folder where script is run)
 dpath = cpath + "/../DATA/"  # path to data that above pycode folder
+tpath=cpath+'/../pyCode/'
 
-def transformData(array_of_freq, label):
-    d={'label':label, 'frequencies':array_of_freq}
-    df = pd.DataFrame(data=d)
-    return df
 
+def make_array(data):
+    array=[]
+    for dat in data:
+        mas=[dat]
+        array.append(mas)
+    return array
 
 def make_one_DataArray(*transformdata):
     DATA=[]
@@ -43,10 +46,10 @@ if __name__ == "__main__":
     with open(dpath + "Down.csv", 'r') as f_obj:
         data = data_transform(f_obj) #  36 уже разных
         freq_Of_ShapesDown = fft_transform(data)
-
-        #print(np.array(freq_Of_ShapesDown).shape)
+        #l=[freq_Of_ShapesDown[1]]
         #print(freq_Of_ShapesDown[1])
-        np.savetxt("foo123.csv", freq_Of_ShapesDown[1], delimiter=",", fmt='%f') # save array to file
+        a=make_array(freq_Of_ShapesDown)
+        #print(a[10])
     with open(dpath + "Run(soft).csv", 'r') as f_obj2:
         data1 = data_transform(f_obj2)
         freq_Of_ShapesRun = fft_transform(data1)
@@ -71,7 +74,9 @@ if __name__ == "__main__":
         data9 = data_transform(f_obj10)
         freq_Of_Stand = fft_transform(data9)
         lendat = len(freq_Of_ShapesDown) + len(runArray) + len(freq_Of_ShapesUp) + len(walking)+len(freq_Of_Stand)
-        print(np.array(freq_Of_ShapesDown).shape, np.array(runArray).shape, np.array(freq_Of_ShapesUp).shape, np.array(walking).shape, np.array(freq_Of_Stand).shape)
+        arr= make_one_DataArray(freq_Of_ShapesDown,runArray,freq_Of_ShapesUp,walking,freq_Of_Stand)
+        print(np.array(a).shape, np.array(runArray).shape, np.array(freq_Of_ShapesUp).shape, np.array(walking).shape, np.array(freq_Of_Stand).shape)
+        #print(a)
 
 
 

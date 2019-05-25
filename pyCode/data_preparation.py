@@ -12,7 +12,16 @@ RANDOM_SEED = 42
 N_CLASSES = 5
 N_FEATURES=1
 N_HIDDEN_UNITS = 64
-N_TIME_STEPS=500 ## количество примеров//данных НЕОБХОДИМО УЗНАТЬ И ПОДСТАВИТЬ КОЛИЧЕСТВО ДАННЫХ ДЛЯ ОБУЧЕНИЯ
+N_TIME_STEPS=450 ## количество примеров//данных НЕОБХОДИМО УЗНАТЬ И ПОДСТАВИТЬ КОЛИЧЕСТВО ДАННЫХ ДЛЯ ОБУЧЕНИЯ
+
+
+batch_size = 10
+kernel_size = 30
+depth = 20
+num_hidden = 50
+
+learning_rate = 0.0025
+training_epochs = 20
 
 cpath = os.path.dirname(__file__)  # pycode folder (should folder where script is run)
 dpath = cpath + "/../DATA/"  # path to data that above pycode folder
@@ -50,107 +59,88 @@ def create_segments():
         data9 = data_transform(f_obj10)
         freq_Of_Stand = fft_transform(data9)
         labelStand = make_array_Labels('Standing', len(freq_Of_Stand))
-    lendat = len(freq_Of_ShapesDown) + len(runArray) + len(freq_Of_ShapesUp) + len(walking)+len(freq_Of_Stand)
 
-    segments=0
-    labels=0
-    for i in range(0, lendat):
-        segments=make_one_DataArray(freq_Of_ShapesDown,runArray,freq_Of_ShapesUp,walking,freq_Of_Stand)
-        labels=make_one_DataArray(labelDown,labelRun,labelUp,labelWalk,labelStand)
-    print(np.array(segments).shape)
-    reshaped_segments = np.asarray(segments, dtype=np.float32).reshape(-1, N_TIME_STEPS)
+    segments = make_one_DataArray(freq_Of_ShapesDown, runArray, freq_Of_ShapesUp, walking, freq_Of_Stand)
+    labels = make_one_DataArray(labelDown, labelRun, labelUp, labelWalk, labelStand)
+    reshaped_segments = np.asarray(segments, dtype=np.float32).reshape(-1, N_TIME_STEPS, N_FEATURES)
     labels = np.asarray(pd.get_dummies(labels), dtype=np.float32)
-    return (np.array(reshaped_segments),labels)
+    return (np.array(reshaped_segments), labels)
 
 segments,labels=create_segments()
 
 X_train, X_test, y_train, y_test = train_test_split(segments, labels, test_size=0.2, random_state=RANDOM_SEED)
 
-def create_model(inputs):
-     W = {
-        'hidden': tf.Variable(tf.random_normal([N_HIDDEN_UNITS])),####Создание весов
-        'output': tf.Variable(tf.random_normal([N_HIDDEN_UNITS, N_CLASSES]))
-     }
-     biases = {
-        'hidden': tf.Variable(tf.random_normal([N_HIDDEN_UNITS], mean=1.0)),
-        'output': tf.Variable(tf.random_normal([N_CLASSES]))
-        }
 
-        ##создание первого слоя с использованием функциии релу - элемент нелинейности
-     X = tf.transpose(inputs, [1, 0])
-     X = tf.reshape(X, [-1, N_FEATURES])
-     hidden = tf.nn.relu(tf.matmul(X, W['hidden']) + biases['hidden'])
-     hidden = tf.split(hidden, N_TIME_STEPS, 0)
-     ##Создание второго слоя
-
-     lstm_layers = [tf.contrib.rnn.BasicLSTMCell(N_HIDDEN_UNITS, forget_bias=1.0) for _ in range(2)]
-     lstm_layers = tf.contrib.rnn.MultiRNNCell(lstm_layers)
-
-     outputs, _ = tf.contrib.rnn.static_rnn(lstm_layers, hidden, dtype=tf.float32)
-     lstm_last_output = outputs[-1]
-     return tf.matmul(lstm_last_output, W['output']) + biases['output']
-
-##Создание наполнения для модели
-## заполнение плейсхолдеров- те места, куда будут подставляться значения входных-выходных переменных
-x = tf.placeholder(tf.float32, [None, N_TIME_STEPS], name="input")###хранит в себе данные по ускорению
-y = tf.placeholder(tf.float32, [None, N_CLASSES])## Хранит в себе данные по виду деятельности
+def weight_variable(shape):
+    initial = tf.truncated_normal(shape, stddev=0.1)
+    return tf.Variable(initial)
 
 
-##Создание входного тензора
-pred_Y = create_model(x)
-pred_softmax = tf.nn.softmax(pred_Y, name="y_")
-
-##Определение функции потерь
-L2_LOSS = 0.0015
-
-l2 = L2_LOSS * \
-        sum(tf.nn.l2_loss(tf_var) for tf_var in tf.trainable_variables())
-loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits = pred_Y, labels = y)) + l2
-
-##Определение оптимизатора
-
-LEARNING_RATE = 0.0025 ##Коэффициент обучения, скорость обучения
-optimizer = tf.train.AdamOptimizer(learning_rate=LEARNING_RATE).minimize(loss)##Оптимизатор, использует алгоритм Адама???!!!!
-correct_pred = tf.equal(tf.argmax(pred_softmax, 1), tf.argmax(y, 1))
-accuracy = tf.reduce_mean(tf.cast(correct_pred, dtype=tf.float32))
+def bias_variable(shape):
+    initial = tf.constant(0.0, shape=shape)
+    return tf.Variable(initial)
 
 
-if  __name__  ==  " __main__ " :
+def depthwise_conv2d(x, W):
+    return tf.nn.depthwise_conv2d(x, W, [1, 1, 1, 1], padding='VALID')
 
-    N_EPOCHS = 50
-    BATCH_SIZE = 1024
-    saver = tf.train.Saver()
 
-    history = dict(train_loss=[], train_acc=[],test_loss=[],test_acc=[])
+def apply_depthwise_conv(x, kernel_size, N_FEATURES, depth):
+    weights = weight_variable([1, kernel_size, N_FEATURES, depth])
+    biases = bias_variable([depth * N_FEATURES])
+    return tf.nn.relu(tf.add(depthwise_conv2d(x, weights), biases))
 
-    sess = tf.InteractiveSession()
-    sess.run(tf.global_variables_initializer())
 
-    train_count = len(X_train)
+def apply_max_pool(x, kernel_size, stride_size):
+    return tf.nn.max_pool(x, ksize=[1, 1, kernel_size, 1],
+                          strides=[1, 1, stride_size, 1], padding='VALID')
+total_batches = X_train.shape[0] // batch_size
 
-    for i in range(1, N_EPOCHS + 1):
-     for start, end in zip(range(0, train_count, BATCH_SIZE),
-                          range(BATCH_SIZE, train_count + 1, BATCH_SIZE)):
-        sess.run(optimizer, feed_dict={x: X_train[start:end],
-                                       y: y_train[start:end]})
+X = tf.placeholder(tf.float32, shape=[None, N_TIME_STEPS, N_FEATURES], name="x_input")
+X_reshaped = tf.reshape(X, [-1, 1, N_TIME_STEPS, N_FEATURES])
+Y = tf.placeholder(tf.float32, shape=[None, N_CLASSES])
 
-     _, acc_train, loss_train = sess.run([pred_softmax, accuracy, loss], feed_dict={
-        x: X_train, y: y_train})
+c = apply_depthwise_conv(X_reshaped, kernel_size, N_FEATURES, depth)
+p = apply_max_pool(c, 20, 2)
+c = apply_depthwise_conv(p, 6, depth*N_FEATURES, depth//10)
 
-     _, acc_test, loss_test = sess.run([pred_softmax, accuracy, loss], feed_dict={
-        x: X_test, y: y_test})
+shape = c.get_shape().as_list()
+c_flat = tf.reshape(c, [-1, shape[1] * shape[2] * shape[3]])
 
-     history['train_loss'].append(loss_train)
-     history['train_acc'].append(acc_train)
-     history['test_loss'].append(loss_test)
-     history['test_acc'].append(acc_test)
+f_weights_l1 = weight_variable([shape[1] * shape[2] * depth * N_FEATURES * (depth//10), num_hidden])
+f_biases_l1 = bias_variable([num_hidden])
+f = tf.nn.tanh(tf.add(tf.matmul(c_flat, f_weights_l1), f_biases_l1))
 
-     if i != 1 and i % 10 != 0:
-        continue
+out_weights = weight_variable([num_hidden, N_CLASSES])
+out_biases = bias_variable([N_CLASSES])
+y_ = tf.nn.softmax(tf.matmul(f, out_weights) + out_biases, name="labels_output")
 
-     print(f'epoch: {i} test accuracy: {acc_test} loss: {loss_test}')
+loss = -tf.reduce_sum(Y * tf.log(y_))
+optimizer = tf.train.AdamOptimizer(learning_rate = learning_rate).minimize(loss)
 
-    predictions, acc_final, loss_final = sess.run([pred_softmax, accuracy, loss], feed_dict={x: X_test, y: y_test})
+correct_prediction = tf.equal(tf.argmax(y_,1), tf.argmax(Y,1))
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+cost_history = np.empty(shape=[1], dtype=float)
 
-    print()
-    print(f'final results: accuracy: {acc_final} loss: {loss_final}')
+saver = tf.train.Saver()
+
+if __name__ == '__main__':
+
+    with tf.Session() as session:
+        # tf.global_variables_initializer().run()
+        session.run(tf.global_variables_initializer())
+        # save the graph
+        tf.train.write_graph(session.graph_def, '.', 'session.pb', False)
+
+        for epoch in range(training_epochs):
+            for b in range(total_batches):
+                offset = (b * batch_size) % (y_train.shape[0] - batch_size)
+                batch_x = X_train[offset:(offset + batch_size), :, :]
+                batch_y = y_train[offset:(offset + batch_size), :]
+                _, c = session.run([optimizer, loss], feed_dict={X: batch_x, Y: batch_y})
+                cost_history = np.append(cost_history, c)
+            print("Epoch: ", epoch, " Training Loss: ", c, " Training Accuracy: ",
+                 session.run(accuracy, feed_dict={X: X_train, Y: y_train}))
+
+        print("Testing Accuracy:", session.run(accuracy, feed_dict={X: X_test, Y: y_test}))
+        saver.save(session, './session.ckpt')
