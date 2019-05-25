@@ -49,7 +49,7 @@ if __name__ == "__main__":
 
         rows = 40
         cols = 450
-        a = np.zeros(shape=(rows, cols))
+        a = np.zeros(shape=(rows, 1, cols))
         indexer = 0
         for index, i in enumerate(freq_Of_ShapesDown):
             if i.size != cols:
@@ -58,6 +58,7 @@ if __name__ == "__main__":
                 a[index] = c
                 continue
             a[index] = i
+        np.reshape(a, a.shape + (1, ))
         print('place for debug breakpoint')
 
     with open(dpath + "Run(soft).csv", 'r') as f_obj2:
